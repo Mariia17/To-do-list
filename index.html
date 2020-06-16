@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/default.css">
+    <title>Document</title>
+</head>
+
+<body>
+    <header>
+        <h1>Список дел</h1>
+        <a onclick="addItem()">Добавить дело</a>
+    </header>
+    <section id='container'>Пока нет никаких дел</section id>
+</body>
+<script>
+    let itemsContainer = document.getElementById('container');
+    let items = [];
+
+    function addItem() {
+
+        let textItem = prompt('Введите текст задания');
+        if (textItem.trim().length === 0) {
+            alert("Ваше задание пусто, ничего не будет добавлено в список");
+        }
+        let newItemId = generateId();
+
+        items[items.length] = {
+            id: newItemId,
+            text: textItem,
+            isDone: false,
+        }
+        displayItems();
+
+    }
+
+
+    function displayItems() {
+
+        if (items.length === 0) {
+            itemsContainer.innerHTML = '<p>Пока никаких дел</p>';
+            return;
+        }
+
+        itemsContainer.innerHTML = '';
+        items.forEach(function (item) {
+            let listElement = createItem(item);
+            itemsContainer.appendChild(listElement);
+        })
+    }
+
+    function createItem(item) {
+        let container = document.createElement('div');
+        let className = 'containerItem';
+
+        if (item.isDone) {
+            className += ' done'
+        }
+
+        container.setAttribute('class', className);
+
+        let text = document.createElement('p');
+        text.innerHTML = item.text;
+
+        let containerButtons = document.createElement('div');
+        containerButtons.setAttribute('class', 'containerButtons');
+
+        let buttonDelete = document.createElement('a');
+        buttonDelete.setAttribute('id', 'del' + item.id);
+        buttonDelete.setAttribute('class', 'buttonDelete');
+        buttonDelete.addEventListener('click', deleteItem);
+        buttonDelete.innerHTML = 'Удалить';
+
+        let buttonDone = document.createElement('a');
+        buttonDone.setAttribute('id', 'done' + item.id);
+        buttonDone.setAttribute('class', 'buttonDone');
+        buttonDone.addEventListener('click', done);
+        buttonDone.innerHTML = 'Сделано';
+
+        let buttonUndone = document.createElement('a');
+        buttonUndone.setAttribute('id', 'undone' + item.id);
+        buttonUndone.setAttribute('class', 'buttonUndone');
+        buttonUndone.addEventListener('click', undone);
+        buttonUndone.innerHTML = 'Не сделано';
+
+        if (item.isDone) {
+            containerButtons.appendChild(buttonUndone);
+        } else {
+            containerButtons.appendChild(buttonDone);
+        };
+
+        containerButtons.appendChild(buttonDelete);
+
+        container.appendChild(text);
+        container.appendChild(containerButtons);
+
+        return container;
+
+    };
+
+    function deleteItem(event) {
+        let elementId = event.target.id.slice(3);
+
+        for (let i = 0; i < items.length; i += 1) {
+            if (items[i].id === elementId) {
+                items.splice(i, 1);
+            };
+        }
+        displayItems()
+    };
+
+
+    function done(event) {
+
+        let elementId = event.target.id.slice(4);
+
+        for (let i = 0; i < items.length; i += 1) {
+            if (items[i].id === elementId) {
+                items[i].isDone = true;
+            }
+        }
+        displayItems();
+    };
+
+    function undone() {
+
+        let elementId = event.target.id.slice(6);
+
+        for (let i = 0; i < items.length; i += 1) {
+            if (items[i].id === elementId) {
+                items[i].isDone = false;
+            }
+        }
+        displayItems();
+    };
+
+
+    function generateId() {
+        return Math.random().toString(36).substring(2, 15) + Math.random().toString(36);
+    };
+
+    document.onload = displayItems();
+</script>
+
+</html>

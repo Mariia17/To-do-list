@@ -1,0 +1,85 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  color: black;
+  background-color: rgb(230, 230, 230);
+}
+
+a:hover {
+  cursor: pointer;
+}
+
+header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  background-color: #7d7d7d;
+  color: white;
+}
+header > h1 {
+  margin-left: 15px;
+}
+
+header > a {
+  margin-left: 15px;
+  padding: 0 7px;
+  background-color: white;
+  color: #7d7d7d;
+  line-height: 2rem;
+  border-radius: 5px;
+}
+section > p {
+  margin: 15px;
+}
+
+.textEmpty {
+  margin: 10px;
+}
+
+.containerItem {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  background-color: white;
+  margin: 15px;
+  padding: 15px;
+  border-radius: 5px;
+}
+
+.done {
+  background-color: rgb(230, 230, 230);
+}
+
+.done > p {
+  text-decoration: line-through;
+}
+
+.containerButtons {
+  display: flex;
+  flex-direction: row;
+}
+.containerButtons > a {
+  background-color: rgb(230, 230, 230);
+  color: #7d7d7d;
+  padding: 0 10px;
+  margin: 10px;
+  border-radius: 5px;
+  line-height: 2rem;
+}
+
+.buttonDelete {
+  background-color: rgb(223, 45, 45) !important;
+  color: white !important;
+}
+
+.buttonDone {
+  background-color: rgb(10, 177, 38) !important;
+  color: white !important;
+}
+
+.buttonUndone {
+  background-color: #7d7d7d !important;
+  color: white !important;
+}
